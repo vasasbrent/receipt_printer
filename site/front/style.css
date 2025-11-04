@@ -1,0 +1,225 @@
+/* Global Layout */
+body {
+  margin: 0;
+  background-color: #f2f2f2;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+main {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  max-width: 100%;
+}
+
+/* Theme Selector */
+.theme-selector {
+  margin-bottom: 1em;
+}
+
+#theme-select {
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* Receipt Container */
+.receipt-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;              /* Let it fit the text naturally */
+  min-width: 40ch;          /* Match 40 monospace characters */
+  padding: 1em;
+}
+
+/* Receipt styling */
+.receipt {
+  position: relative;
+  width: auto;
+  aspect-ratio: 3 / 5;
+  min-width: 40ch;          /* Ensure the receipt image and textarea align */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.receipt {
+  position: relative;
+  width: auto;
+  min-width: 40ch;
+  border-radius: 6px;
+
+  /* Simulate thermal paper */
+  background: #fff;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.01) 0px,
+      rgba(0,0,0,0.01) 1px,
+      transparent 1px,
+      transparent 3px
+    ); /* subtle horizontal lines */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* slight depth */
+}
+
+.receipt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1em;
+  box-sizing: border-box;
+  font-family: "Courier New", monospace;
+
+  /* Simulate thermal paper */
+  background: #fff;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.02) 0px,
+      rgba(0,0,0,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    ); /* subtle horizontal lines */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* slight depth */
+}
+
+.receipt-header {
+  white-space: pre;
+  text-align: left;
+  font-size: 0.6rem;
+  line-height: 1.1;
+  width: 100%;
+  margin-bottom: 1.5em;
+}
+
+.receipt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 4px 4px; /* tiny grain pattern */
+  pointer-events: none;     /* don’t block interaction */
+}
+
+.receipt::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 5px,
+    #f2f2f2 5px,
+    #f2f2f2 10px
+  );
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* Transparent Textarea */
+#message-input {
+  font-family: "Courier New", monospace;
+  width: 40ch;              /* Exactly 40 monospace characters per line */
+  flex: none;               /* Prevent stretching */
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: rgba(0,0,0,0.9);
+  text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  font-size: 0.8rem;
+  padding: 0.5em;
+  line-height: 1.2;
+  display: none; /* Hidden until a theme is selected */
+}
+
+#message-input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Submit Button */
+.submit-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5em;
+}
+
+#submit-btn {
+  font-family: monospace;
+  padding: 0.5em 1.5em;
+  border: none;
+  border-radius: 4px;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#submit-btn:hover {
+  background-color: #333;
+}
+
+.popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 1em 2em;
+  border-radius: 6px;
+  font-family: monospace;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Theme Colors */
+.note .receipt-header {
+  color: #333;
+}
+.poem .receipt-header {
+  color: #333;
+}
+.memo .receipt-header {
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .receipt-container {
+    max-width: 90vw;
+  }
+
+  #message-input {
+    font-size: 0.75rem;
+  }
+}

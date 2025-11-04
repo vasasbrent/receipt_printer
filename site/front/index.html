@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Me</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Send me Some Words!</h1>
+
+    <!-- Theme selector -->
+    <section class="theme-selector">
+      <select id="theme-select">
+        <option value="">Choose a Theme</option>
+        <option value="note">Note</option>
+        <option value="memo">Memo</option>
+        <option value="poem">Poem</option>
+      </select>
+    </section>
+
+    <!-- Receipt Section -->
+    <section class="receipt-container">
+      <div id="receipt" class="receipt">
+        <div class="receipt-overlay">
+          <pre class="receipt-header" id="receipt-header"></pre>
+          <pre id="receipt-display" class="receipt-header"></pre>
+          <textarea
+            id="message-input"
+            rows="20"
+            cols="40"
+            maxlength="512"
+            placeholder="Type your message here..."
+          ></textarea>
+        </div>
+      </div>
+      <div id="popup" class="popup">Message Sent!</div>
+    </section>
+
+    <!-- Send Button Section -->
+    <section class="submit-section">
+      <button id="submit-btn">Ship It!</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
