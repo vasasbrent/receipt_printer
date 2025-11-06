@@ -1,30 +1,36 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import subprocess
 
 app = Flask(__name__)
-CORS(app)  # allow cross-origin requests from your front end
 
-# POST endpoint to send message
-@app.route('/send', methods=['POST'])
-def send_message():
-    data = request.get_json()
-    theme = data.get('theme')
-    message = data.get('message')
+# Configure Flask-Limiter
+limiter = Limiter(
+    key_func=get_remote_address,
+    app=app,
+    default_limits=["10 per minute"],  # global fallback
+)
 
-    if not theme or not message:
-        return jsonify({'success': False, 'error': 'Theme and message are required'}), 400
 
-    # Call your printing script with arguments
+@app.route('/print', methods=['POST'])
+@limiter.limit("3 per minute")  # per-IP limit
+def print_receipt():
+    data = request.get_json() or {}
+    message = data.get('message', '').strip()
+
+    if not message:
+        return jsonify({"error": "No message provided"}), 400
+
+    # Example call to your Python print script
     try:
-        # Example: call print_script.py with theme and message as args
-        subprocess.run(
-            ['python3', 'print_script.py', theme, message],
-            check=True
-        )
-        return jsonify({'success': True, 'message': 'Message sent to printer'})
+        subprocess.run(["/usr/bin/python3", "/path/to/your/print_script.py", message], check=True)
     except subprocess.CalledProcessError as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({"error": f"Print failed: {e}"}), 500
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    return jsonify({"status": "Message sent!", "message": message})
+
+
+if __name__ == '__main__':
+    # For local testing only — use Gunicorn in production
+    app.run(host='0.0.0.0', port=8000, debug=True)
