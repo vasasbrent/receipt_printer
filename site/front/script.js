@@ -75,7 +75,7 @@ themeSelect.addEventListener('change', () => {
   }
 });
 
-function showPopup() {
+function showSentPopup() {
   const popup = document.getElementById('popup');
   popup.classList.add('show');
   setTimeout(() => popup.classList.remove('show'), 1500); // disappear after 1.5s
@@ -96,7 +96,7 @@ submitBtn.addEventListener('click', () => {
   }
 
   // Show popup
-  showPopup();
+  showSentPopup();
 
   // Clear message box
   messageInput.value = '';

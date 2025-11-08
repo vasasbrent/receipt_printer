@@ -47,7 +47,7 @@ main {
 .receipt {
   position: relative;
   width: auto;
-  aspect-ratio: 3 / 5;
+  aspect-ratio: 3 / 4.5;
   min-width: 40ch;          /* Ensure the receipt image and textarea align */
   background-size: contain;
   background-repeat: no-repeat;
