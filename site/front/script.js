@@ -81,7 +81,6 @@ function showSentPopup() {
   setTimeout(() => popup.classList.remove('show'), 1500); // disappear after 1.5s
 }
 
-// Submit placeholder
 submitBtn.addEventListener('click', () => {
   const theme = themeSelect.value;
   const message = messageInput.value.trim();
@@ -95,11 +94,22 @@ submitBtn.addEventListener('click', () => {
     return;
   }
 
-  // Show popup
-  showSentPopup();
+  submitBtn.disabled = true;
 
-  // Clear message box
-  messageInput.value = '';
-
-  console.log(`Theme: ${theme}, Message: ${message}`);
+  fetch('/print', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ theme, message }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showSentPopup();
+        messageInput.value = '';
+      } else {
+        alert('Print failed: ' + (data.error || 'Unknown error'));
+      }
+    })
+    .catch(err => alert('Request failed: ' + err))
+    .finally(() => { submitBtn.disabled = false; });
 });

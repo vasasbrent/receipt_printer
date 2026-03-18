@@ -1,16 +1,29 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import subprocess
+import os
+
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '..', 'front')
 
 receipt_backend_app = Flask(__name__)
 
 # Configure Flask-Limiter
 limiter = Limiter(
-    key_func=get_remote_address,
-    receipt_backend_app=receipt_backend_app,
+    get_remote_address,
+    app=receipt_backend_app,
     default_limits=["10 per minute"],  # global fallback
 )
+
+
+@receipt_backend_app.route('/')
+def index():
+    return send_from_directory(FRONTEND_DIR, 'index.html')
+
+
+@receipt_backend_app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory(FRONTEND_DIR, filename)
 
 
 @receipt_backend_app.route('/print', methods=['POST'])
@@ -25,7 +38,7 @@ def print_receipt():
 
     # Example call to your Python print script
     try:
-        subprocess.run(["python3", "/home/brentvasas/documents/projects/print_script.py", theme, message], check=True)
+        subprocess.run(["python3", os.path.join(os.path.dirname(__file__), '../../print/print_script.py'), theme, message], check=True)
         return jsonify({'success': True, 'message': 'Message sent to printer'})
     except subprocess.CalledProcessError as e:
         return jsonify({"error": f"Print failed: {e}"}), 500
