@@ -1,11 +1,12 @@
 import sys
+
 from escpos import printer
 
-PRINTER_PROFILE = 'TM-T88V'
-PRINTER_LOCAL_IP = '192.168.1.178'
+PRINTER_PROFILE = "TM-T88V"
+PRINTER_LOCAL_IP = "192.168.1.178"
 
 headers = {
-    'note': "\
+    "note": "\
    ______________________________________\n\
   |   __    _   ___    _______ .____     |\n\
   |   |\\   |  .'   `. '   /    /        |\n\
@@ -13,7 +14,7 @@ headers = {
   |   |  \\ |  |     |     |    |         |\n\
   |   |   \\|   `.__.'     /    /----/    |\n\
   |______________________________________|",
-    'poem': "\
+    "poem": "\
    ______________________________________\n\
   |    .-.                               |\n\
   |   (_) )-.                            |\n\
@@ -22,7 +23,7 @@ headers = {
   |  .-:. `--' `;;'   `:::'';  ;;  ';    |\n\
   | (_/                   _;        `-'  |\n\
   |______________________________________|",
-    'memo': "\
+    "memo": "\
    ______________________________________\n\
   |    __  __  ______  __  __   ____     |\n\
   |   |  \\/  ||  ____||  \\/  | / __ \\    |\n\
@@ -33,6 +34,14 @@ headers = {
   |______________________________________|",
 }
 
+
+def format_message(message: str) -> str:
+    # TODO: Indent beginning of line by a little
+    # TODO: Introduce newlines early at spaces *if* said line exceeds a character limit
+    ret_message: str = message
+    return ret_message
+
+
 if len(sys.argv) != 3:
     print("Usage: print_script.py <theme> <message>", file=sys.stderr)
     sys.exit(1)
@@ -40,13 +49,15 @@ if len(sys.argv) != 3:
 theme = sys.argv[1]
 message = sys.argv[2]
 
+message = format_message(message)
+
 header = headers.get(theme)
 if not header:
     print(f"Unknown theme: {theme}", file=sys.stderr)
     sys.exit(1)
 
 p = printer.Network(PRINTER_LOCAL_IP, profile=PRINTER_PROFILE)
-p.set(align='left')
-p.text(header + '\n\n')
-p.text(message + '\n')
+p.set(align="left")
+p.text(header + "\n\n")
+p.text(message + "\n")
 p.cut()
