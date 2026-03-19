@@ -93,6 +93,11 @@ submitBtn.addEventListener('click', () => {
     alert('Please enter a message.');
     return;
   }
+  if ((message.match(/\n/g) || []).length > 50) {
+    // TODO: Improve message for frontend use.
+    alert('Message has too many line breaks (max 50).');
+    return;
+  }
 
   submitBtn.disabled = true;
 
