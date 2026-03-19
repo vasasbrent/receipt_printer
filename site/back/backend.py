@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify, send_from_directory
+import os
+import subprocess
+
+from flask import Flask, jsonify, request, send_from_directory
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from werkzeug.middleware.proxy_fix import ProxyFix
-import subprocess
-import os
 
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '..', 'front')
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "front")
 
 receipt_backend_app = Flask(__name__)
 
@@ -24,12 +25,12 @@ limiter = Limiter(
 )
 
 
-@receipt_backend_app.route('/')
+@receipt_backend_app.route("/")
 def index():
-    return send_from_directory(FRONTEND_DIR, 'index.html')
+    return send_from_directory(FRONTEND_DIR, "index.html")
 
 
-@receipt_backend_app.route('/<path:filename>')
+@receipt_backend_app.route("/<path:filename>")
 def static_files(filename):
     return send_from_directory(FRONTEND_DIR, filename)
 
@@ -38,15 +39,15 @@ VALID_THEMES = {"note", "memo", "poem"}
 MAX_MESSAGE_LENGTH = 512
 
 
-@receipt_backend_app.route('/print', methods=['POST'])
+@receipt_backend_app.route("/print", methods=["POST"])
 @limiter.limit("3 per minute")  # per-IP limit
 def print_receipt():
     data = request.get_json(silent=True)
     if not data:
         return jsonify({"error": "Invalid request"}), 400
 
-    theme = data.get('theme')
-    message = data.get('message')
+    theme = data.get("theme")
+    message = data.get("message")
 
     if not theme or not isinstance(theme, str) or theme not in VALID_THEMES:
         return jsonify({"error": "Invalid theme"}), 400
@@ -56,25 +57,31 @@ def print_receipt():
 
     if len(message) > MAX_MESSAGE_LENGTH:
         # TODO: improve this error message
-        return jsonify({"error": f"Message exceeds {MAX_MESSAGE_LENGTH} character limit"}), 400
+        return jsonify(
+            {"error": f"Message exceeds {MAX_MESSAGE_LENGTH} character limit"}
+        ), 400
 
-    if message.count('\n') > 50:
+    if message.count("\n") > 50:
         return jsonify({"error": "Message has too many line breaks (max 50)"}), 400
 
     try:
         subprocess.run(
-            ["python3", os.path.join(os.path.dirname(__file__), '../../print/print_script.py'), theme, message],
+            [
+                "python3",
+                os.path.join(os.path.dirname(__file__), "../../print/print_script.py"),
+                theme,
+                message,
+            ],
             check=True,
             timeout=10,
         )
-        return jsonify({'success': True, 'message': 'Message sent to printer'})
+        return jsonify({"success": True, "message": "Message sent to printer!"})
     except subprocess.CalledProcessError:
         return jsonify({"error": "Print failed"}), 500
     except subprocess.TimeoutExpired:
         return jsonify({"error": "Print timed out"}), 500
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     # For local testing only — use Gunicorn in production
-    receipt_backend_app.run(host='0.0.0.0', port=8000, debug=True)
+    receipt_backend_app.run(host="0.0.0.0", port=8000, debug=True)
