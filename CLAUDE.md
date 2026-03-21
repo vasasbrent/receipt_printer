@@ -22,29 +22,21 @@ print/
   printer_testing.py # Direct printer test script using python-escpos
 ```
 
-**Data flow:** Frontend collects `theme` + `message` → POSTs JSON to Flask `/print` → Flask calls an external print script via `subprocess` → print script uses `python-escpos` to send ESC/POS commands to the printer at `192.168.1.178`.
+**Data flow:** Frontend collects `theme` + `message` + optional `sender_name` → POSTs JSON to Flask `/print` → Flask extracts sender IP and parses User-Agent (OS/browser), then calls an external print script via `subprocess` → print script uses `python-escpos` to send ESC/POS commands to the printer at `192.168.1.178`.
 
-**Note:** `printer_testing.py` is for direct ad-hoc testing. `print_script.py` is the script invoked by the backend — it accepts `theme` and `message` as CLI args and sends the job to the printer.
-
-**Note:** The frontend submit button currently only logs to the console — the `fetch`/POST call to the backend has not been wired up yet.
+**Note:** `printer_testing.py` is for direct ad-hoc testing. `print_script.py` is the script invoked by the backend — it accepts `theme`, `message`, `sender_name`, `ip`, and `device_info` as CLI args and sends the job to the printer.
 
 ## Running
 
 ```bash
-# Activate venv
-source .venv/bin/activate
-
-# Install dependencies (Flask + limiter + ESC/POS library)
-pip install flask flask-limiter python-escpos
-
-# Run backend (dev mode)
-python site/back/backend.py          # serves on 0.0.0.0:8000
+# Run backend (dev mode) — uv manages the venv and dependencies automatically
+uv run site/back/backend.py          # serves on 0.0.0.0:8000
 
 # Production
-gunicorn -w 4 -b 0.0.0.0:8000 'site.back.backend:receipt_backend_app'
+uv run --with gunicorn gunicorn -w 4 -b 0.0.0.0:8000 'site.back.backend:receipt_backend_app'
 
 # Test printer directly (requires printer on local network)
-python print/printer_testing.py
+uv run --with escpos print/printer_testing.py
 ```
 
 ## Key details

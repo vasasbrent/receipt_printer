@@ -39,6 +39,41 @@ VALID_THEMES = {"note", "memo", "poem"}
 MAX_MESSAGE_LENGTH = 512
 
 
+def parse_device_info(ua_string: str) -> str:
+    """Parse User-Agent string into a short 'OS / Browser' string."""
+    if "Windows NT" in ua_string:
+        os_name = "Windows"
+    elif "Macintosh" in ua_string or "Mac OS X" in ua_string:
+        os_name = "macOS"
+    elif "iPhone" in ua_string or "iPad" in ua_string:
+        os_name = "iOS"
+    elif "Android" in ua_string:
+        os_name = "Android"
+    elif "CrOS" in ua_string:
+        os_name = "ChromeOS"
+    elif "Linux" in ua_string:
+        os_name = "Linux"
+    else:
+        os_name = "Unknown OS"
+
+    if "Edg/" in ua_string or "EdgA/" in ua_string:
+        browser = "Edge"
+    elif "OPR/" in ua_string or "Opera" in ua_string:
+        browser = "Opera"
+    elif "Firefox/" in ua_string:
+        browser = "Firefox"
+    elif "Chrome/" in ua_string:
+        browser = "Chrome"
+    elif "Safari/" in ua_string:
+        browser = "Safari"
+    elif "MSIE" in ua_string or "Trident/" in ua_string:
+        browser = "IE"
+    else:
+        browser = "Unknown Browser"
+
+    return f"{os_name} / {browser}"
+
+
 @receipt_backend_app.route("/print", methods=["POST"])
 @limiter.limit("3 per minute")  # per-IP limit
 def print_receipt():
@@ -48,6 +83,13 @@ def print_receipt():
 
     theme = data.get("theme")
     message = data.get("message")
+    sender_name = data.get("sender_name", "")
+    if not isinstance(sender_name, str):
+        sender_name = ""
+    sender_name = sender_name.strip()[:50]
+
+    ip = request.remote_addr or "Unknown"
+    device_info = parse_device_info(request.headers.get("User-Agent", ""))
 
     if not theme or not isinstance(theme, str) or theme not in VALID_THEMES:
         return jsonify({"error": "Invalid theme"}), 400
@@ -74,6 +116,9 @@ def print_receipt():
                 os.path.join(os.path.dirname(__file__), "../../print/print_script.py"),
                 theme,
                 message,
+                sender_name,
+                ip,
+                device_info,
             ],
             check=True,
             timeout=10,
