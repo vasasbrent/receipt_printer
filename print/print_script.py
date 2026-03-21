@@ -36,8 +36,6 @@ headers = {
 
 
 def format_message(message: str) -> str:
-    # TODO: Indent beginning of line by a little
-    # TODO: Introduce newlines early at spaces *if* said line exceeds a character limit
     ret_message: str = message
     return ret_message
 

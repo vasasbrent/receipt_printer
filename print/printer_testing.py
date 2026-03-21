@@ -33,31 +33,12 @@ memo_header = "\
   |   |_|  |_||______||_|  |_| \____/    |\n\
   |______________________________________|"
 
-santa_clue = "\n\n\
-Where cola once flowed,\n\
-the plant all but forgotten,\n\
-yet left us a Splash.\n\
-\n\
-Carbonated waves,\n\
-a frothy sea of soda,\n\
-on a Sandy shore.\n\
-\n\
-Liquid silver face,\n\
-two seven near the zipper,\n\
-solve and hit Paydirt.\n\n"
 
 p = printer.Network(PRINTER_LOCAL_IP, profile=PRINTER_PROFILE)
 
-p.set(align='center')
+p.set(align='left')
 
-image = "/home/brentvasas/documents/projects/receipt_printer/tmp/santa.jpg"
-
-p.image(image)
-
-p.text(santa_clue)
-
-p.image(image)
-
+p.text("1234567890123456789012345678901234567890123456789012345678901234567890")
 #p.text("\n\nThe quick brown fox jumped over the lazy dog 0123456789\n\n")
 
 p.cut()
