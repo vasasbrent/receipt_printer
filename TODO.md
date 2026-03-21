@@ -8,10 +8,11 @@ The list of things that must be done in order for the project to be finished.
 
 * Form
   * Bash script
-  * To be executed on the server (git used to get latest/specific files)
+  * To be executed on the server (git used to get latest/specific revision/branch)
 * Function
   * Copy files necessary to run the web app into appropriate locations
-  * Verify operation has succeeded for all files
+  * Restart backend process
+  * Restart web hosting process
 
 ## Sender identity
 
@@ -43,7 +44,7 @@ The list of things that must be done in order for the project to be finished.
 
 ## Message Formatting
 
-**Status: Not Started**
+**Status: Completed**
 
 To be done in function `format_message` in `print_script.py`
 
