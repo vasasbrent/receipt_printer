@@ -1,4 +1,3 @@
-import random
 import sys
 
 from escpos import printer
@@ -6,25 +5,6 @@ from escpos import printer
 PRINTER_PROFILE = "TM-T88V"
 PRINTER_LOCAL_IP = "192.168.1.178"
 
-POETS = [
-    "William Shakespeare",
-    "Emily Dickinson",
-    "Robert Frost",
-    "Langston Hughes",
-    "Maya Angelou",
-    "Walt Whitman",
-    "Edgar Allan Poe",
-    "Pablo Neruda",
-    "Sylvia Plath",
-    "T.S. Eliot",
-]
-
-DEFAULT_SENDERS = {
-    "note": "Pass it on",
-    "memo": "Anonymous",
-    "poem": None,  # resolved to a random poet at runtime
-    "love letter": "Secret Admirer",
-}
 
 headers = {
     "note": "\
@@ -70,10 +50,6 @@ message = sys.argv[2]
 sender_name = sys.argv[3].strip()
 ip = sys.argv[4]
 device_info = sys.argv[5]
-
-if not sender_name:
-    default = DEFAULT_SENDERS.get(theme)
-    sender_name = random.choice(POETS) if default is None else default
 
 message = format_message(message)
 

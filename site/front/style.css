@@ -186,7 +186,7 @@ main {
   outline: none;
   background: transparent;
   color: rgba(0, 0, 0, 0.9);
-  text-align: right;
+  text-align: left;
   width: 22ch;
 }
 

@@ -17,6 +17,8 @@ The list of things that must be done in order for the project to be finished.
 
 **Status: Not Started**
 
+### Initial Spec
+
 * Form
   * Optional name field in the frontend
 * Function
@@ -29,6 +31,15 @@ The list of things that must be done in order for the project to be finished.
   * Provided or default name/identity will be placed below the note
   * Additionally, the IP address and device info of the sender should be printed on the final line
 
+### Revision Two
+
+* Random poet should be populated in the front end
+* Text in the signature box should be left justified
+
+### Revision Three
+
+* Not enough women in poet list
+* randomPoet called twice, resulting in different poet printed than shown
 
 ## Message Formatting
 

@@ -30,7 +30,7 @@ print/
 
 ```bash
 # Run backend (dev mode) — uv manages the venv and dependencies automatically
-uv run site/back/backend.py          # serves on 0.0.0.0:8000
+uv run --with flask --with flask_limiter site/back/backend.py          # serves on 0.0.0.0:8000
 
 # Production
 uv run --with gunicorn gunicorn -w 4 -b 0.0.0.0:8000 'site.back.backend:receipt_backend_app'

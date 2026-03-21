@@ -7,10 +7,30 @@ const senderInput = document.getElementById('sender-input');
 const submitBtn = document.getElementById('submit-btn');
 
 const defaultSenders = {
-  note: 'Pass it on',
-  memo: 'Anonymous',
-  poem: 'Anonymous Poet',
+  note: 'Psst, pass it on...',
+  memo: 'Corporate',
 };
+
+const poets = [
+  'William Shakespeare',
+  'Emily Dickinson',
+  'Robert Frost',
+  'Langston Hughes',
+  'Maya Angelou',
+  'Walt Whitman',
+  'Edgar Allan Poe',
+  'Pablo Neruda',
+  'Sylvia Plath',
+  'T.S. Eliot',
+  'Mary Oliver',
+  'Diane Seuss',
+];
+
+let activePoet = null;
+
+function randomPoet() {
+  return poets[Math.floor(Math.random() * poets.length)];
+}
 
 // ASCII headers for each theme
 const headers = {
@@ -63,7 +83,8 @@ themeSelect.addEventListener('change', () => {
     messageInput.style.display = 'block';
     senderLine.style.display = 'flex';
     senderInput.value = '';
-    senderInput.placeholder = defaultSenders[theme] || 'Anonymous';
+    activePoet = theme === 'poem' ? randomPoet() : null;
+    senderInput.placeholder = activePoet ?? (defaultSenders[theme] || 'Anonymous');
     receipt.classList.add(theme);
     headerEl.textContent = headers[theme] || '';
 
@@ -85,6 +106,7 @@ themeSelect.addEventListener('change', () => {
     messageInput.value = '';
     senderLine.style.display = 'none';
     senderInput.value = '';
+    activePoet = null;
     headerEl.textContent = '';
     document.body.style.backgroundColor = '#ffffff';
   }
@@ -116,7 +138,10 @@ submitBtn.addEventListener('click', () => {
 
   submitBtn.disabled = true;
 
-  const sender_name = senderInput.value.trim();
+  const sender_name = senderInput.value.trim()
+    || activePoet
+    || defaultSenders[theme]
+    || 'Anonymous';
 
   fetch('/print', {
     method: 'POST',

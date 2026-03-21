@@ -13,4 +13,3 @@ ProxyFix is part of werkzeug, which Flask already depends on — no new packages
   
   * Check in on placeholder in index.html line 38
   * Default poet might be borked in script.js line 12, nvm all good
-  *
