@@ -47,10 +47,15 @@ The list of things that must be done in order for the project to be finished.
 
 To be done in function `format_message` in `print_script.py`
 
-Note: The printer can print 42 monospace characters per line.
-The front end is configured to only allow 38 characters per line.
+Notes: 
+* The printer can print 42 monospace characters per line
+* The front end is configured to only allow 38 characters per line
+* Check for maximum newlines should occur after message has been formatted
 
-* Ensure the formatting of the printed message looks exactly like it does on the front end when user hits send.
+Feature:
+* Format the printed message to look exactly like it does on the front end when user hits send.
   * 38 characters per line max
   * 2 leading spaces, 2 trailing spaces
-  * line breaks not in the middle of words
+  * Line breaks not in the middle of words (should appear at spaces)
+* Sender field shall be right justified
+* IP and OS info shall be center justified and bracketed by "~" characters for decoration
