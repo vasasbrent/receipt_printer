@@ -2,7 +2,35 @@ const themeSelect = document.getElementById('theme-select');
 const receipt = document.getElementById('receipt');
 const headerEl = document.getElementById('receipt-header');
 const messageInput = document.getElementById('message-input');
+const senderLine = document.getElementById('sender-line');
+const senderInput = document.getElementById('sender-input');
 const submitBtn = document.getElementById('submit-btn');
+
+const defaultSenders = {
+  note: 'Psst, pass it on...',
+  memo: 'Corporate',
+};
+
+const poets = [
+  'William Shakespeare',
+  'Emily Dickinson',
+  'Robert Frost',
+  'Langston Hughes',
+  'Maya Angelou',
+  'Walt Whitman',
+  'Edgar Allan Poe',
+  'Pablo Neruda',
+  'Sylvia Plath',
+  'T.S. Eliot',
+  'Mary Oliver',
+  'Diane Seuss',
+];
+
+let activePoet = null;
+
+function randomPoet() {
+  return poets[Math.floor(Math.random() * poets.length)];
+}
 
 // ASCII headers for each theme
 const headers = {
@@ -40,6 +68,8 @@ window.addEventListener('DOMContentLoaded', () => {
   headerEl.textContent = "";     // Clear header
   messageInput.value = "";       // Clear message box
   messageInput.style.display = 'none'; // Hide message box
+  senderLine.style.display = 'none';
+  senderInput.value = '';
   document.body.style.backgroundColor = '#f2f2f2'; // Default background
 });
 
@@ -51,6 +81,10 @@ themeSelect.addEventListener('change', () => {
   if (theme) {
     // Show the message box when a theme is selected
     messageInput.style.display = 'block';
+    senderLine.style.display = 'flex';
+    senderInput.value = '';
+    activePoet = theme === 'poem' ? randomPoet() : null;
+    senderInput.placeholder = activePoet ?? (defaultSenders[theme] || 'Anonymous');
     receipt.classList.add(theme);
     headerEl.textContent = headers[theme] || '';
 
@@ -70,6 +104,9 @@ themeSelect.addEventListener('change', () => {
     // Hide message box, clear text, and reset visuals
     messageInput.style.display = 'none';
     messageInput.value = '';
+    senderLine.style.display = 'none';
+    senderInput.value = '';
+    activePoet = null;
     headerEl.textContent = '';
     document.body.style.backgroundColor = '#ffffff';
   }
@@ -101,10 +138,15 @@ submitBtn.addEventListener('click', () => {
 
   submitBtn.disabled = true;
 
+  const sender_name = senderInput.value.trim()
+    || activePoet
+    || defaultSenders[theme]
+    || 'Anonymous';
+
   fetch('/print', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ theme, message }),
+    body: JSON.stringify({ theme, message, sender_name }),
   })
     .then(res => res.json())
     .then(data => {

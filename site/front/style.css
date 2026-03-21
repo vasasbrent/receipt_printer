@@ -158,7 +158,40 @@ main {
 }
 
 #message-input::placeholder {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Sender Line */
+.sender-line {
+  width: 40ch;
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3em;
+  padding: 0.25em 0.5em 0.5em;
+  font-family: "Courier New", monospace;
+  font-size: 0.8rem;
+}
+
+.sender-label {
+  color: rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
+#sender-input {
+  font-family: "Courier New", monospace;
+  font-size: 0.8rem;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.9);
+  text-align: left;
+  width: 22ch;
+}
+
+#sender-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 /* Submit Button */

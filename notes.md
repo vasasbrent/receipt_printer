@@ -7,3 +7,9 @@ ProxyFix is part of werkzeug, which Flask already depends on — no new packages
   - If you stack two proxies (e.g., Cloudflare in front of nginx in front of Flask), you'd set x_for=2. One proxy = x_for=1.
   - Your reverse proxy must actually set the header. In nginx this is proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; in your server block 
     - most standard configs include this already.
+
+  
+  ## 2026-03-21
+  
+  * Check in on placeholder in index.html line 38
+  * Default poet might be borked in script.js line 12, nvm all good
