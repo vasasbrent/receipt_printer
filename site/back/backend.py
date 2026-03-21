@@ -67,7 +67,10 @@ def print_receipt():
     try:
         subprocess.run(
             [
-                "python3",
+                "uv",
+                "run",
+                "--with",
+                "escpos",
                 os.path.join(os.path.dirname(__file__), "../../print/print_script.py"),
                 theme,
                 message,
