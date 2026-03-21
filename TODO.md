@@ -15,7 +15,7 @@ The list of things that must be done in order for the project to be finished.
 
 ## Sender identity
 
-**Status: Not Started**
+**Status: Completed**
 
 ### Initial Spec
 
