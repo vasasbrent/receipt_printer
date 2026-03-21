@@ -37,8 +37,19 @@ headers = {
 
 
 def format_message(message: str) -> str:
-    ret_message: str = message
-    return ret_message
+    output_lines = []
+    for line in message.split("\n"):
+        if not line:
+            output_lines.append("")
+            continue
+        while len(line) > 38:
+            break_at = line.rfind(" ", 0, 38)
+            if break_at <= 0:
+                break_at = 38
+            output_lines.append("  " + line[:break_at].rstrip())
+            line = line[break_at:].lstrip(" ")
+        output_lines.append("  " + line)
+    return "\n".join(output_lines)
 
 
 if len(sys.argv) != 6:
@@ -62,6 +73,8 @@ p = printer.Network(PRINTER_LOCAL_IP, profile=PRINTER_PROFILE)
 p.set(align="left")
 p.text(header + "\n\n")
 p.text(message + "\n\n")
-p.text(f"  — {sender_name}\n\n")
-p.text(f"  {ip} | {device_info}\n")
+p.set(align="right")
+p.text(f"- {sender_name}  \n\n")
+p.set(align="center")
+p.text(f"- {ip} | {device_info} -\n")
 p.cut()

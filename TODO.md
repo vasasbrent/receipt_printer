@@ -43,11 +43,10 @@ The list of things that must be done in order for the project to be finished.
 
 ## Message Formatting
 
-**Status: Not Started**
-
-To be done in function `format_message` in `print_script.py`
+**Status: Completed**
 
 Notes: 
+* To be done in function `format_message` in `print_script.py`
 * The printer can print 42 monospace characters per line
 * The front end is configured to only allow 38 characters per line
 * Check for maximum newlines should occur after message has been formatted
