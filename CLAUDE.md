@@ -33,7 +33,8 @@ print/
 uv run --with flask --with flask_limiter site/back/backend.py          # serves on 0.0.0.0:8000
 
 # Production
-uv run --with gunicorn gunicorn -w 4 -b 0.0.0.0:8000 'site.back.backend:receipt_backend_app'
+# --chdir avoids a conflict with Python's built-in 'site' module
+uv run --with gunicorn gunicorn --chdir site/back -w 4 -b 0.0.0.0:8000 'backend:receipt_backend_app'
 
 # Test printer directly (requires printer on local network)
 uv run --with escpos print/printer_testing.py
