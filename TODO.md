@@ -58,3 +58,29 @@ Feature:
   * Line breaks not in the middle of words (should appear at spaces)
 * Sender field shall be right justified
 * IP and OS info shall be center justified and bracketed by "~" characters for decoration
+
+## Migrate Theme Colors to CSS Variables
+
+**Status: Not Started**
+
+* Currently theme background colors are set via `document.body.style.backgroundColor` in the JS switch statement in `script.js`
+* Move theme color definitions to CSS custom properties (e.g. `--theme-bg-note`, `--theme-bg-poem`, etc.) in `style.css`
+* JS should apply a theme class or data attribute to `body` instead of setting inline styles directly
+* This allows other CSS rules (e.g. the helper dialog button) to derive colors from theme variables without JS involvement
+
+## Helper Dialog
+
+**Status: Specify**
+
+* Clickable question mark which:
+  * Is fixed to the top-right corner of the viewport
+    * Size is a named CSS variable (e.g. `--help-btn-size`) for easy tuning
+    * Should occupy a minimal percentage of the screen
+  * Is present regardless of whether a theme is selected
+  * Does not attract undue attention
+    * Color matches the theme background at a different shade
+      * Darker if the theme background is light, lighter if dark
+      * When no theme is selected, background is white — use a light gray
+  * Brings up a custom-styled dialog box (consistent with the overall site aesthetic) with text:
+    * "Pick a theme, write your message, and hit send! Your words will be magically teleported through the ether and printed on a receipt in my living room. Feel free to sign it or stay anonymous."
+  * Dialog is dismissed by any keypress or any click/tap
