@@ -84,3 +84,15 @@ Feature:
   * Brings up a custom-styled dialog box (consistent with the overall site aesthetic) with text:
     * "Pick a theme, write your message, and hit send! Your words will be magically teleported through the ether and printed on a receipt in my living room. Feel free to sign it or stay anonymous."
   * Dialog is dismissed by any keypress or any click/tap
+
+## Feedback on Printer Status
+
+**Status: Not Started**
+
+Online status and paper roll fullness (if available)
+
+## Replace Dev Popup Messages
+
+**Status: Not Started**
+
+If something in the backend isn't working the user should just get a generic message.
