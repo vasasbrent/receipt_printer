@@ -41,8 +41,17 @@ def normalize_apostrophes(message: str) -> str:
     return message.replace("\u2018", "'").replace("\u2019", "'")
 
 
+def strip_unprintable(message: str) -> str:
+    # Keep printable ASCII (0x20–0x7E) and newlines only.
+    # Characters outside this range are either control bytes (which could
+    # trigger unintended ESC/POS commands) or Unicode that the printer's
+    # default PC437 code page cannot represent.
+    return "".join(c for c in message if 0x20 <= ord(c) <= 0x7E or c == "\n")
+
+
 def format_message(message: str) -> str:
     message = normalize_apostrophes(message)
+    message = strip_unprintable(message)
     output_lines = []
     for line in message.split("\n"):
         if not line:
