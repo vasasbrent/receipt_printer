@@ -36,12 +36,16 @@ memo_header = "\
 
 p = printer.Network(PRINTER_LOCAL_IP, profile=PRINTER_PROFILE)
 
-p.set(align='left')
+#p.set(align='left')
 
-p.text("1234567890123456789012345678901234567890123456789012345678901234567890")
+
+#p.text("1234567890123456789012345678901234567890123456789012345678901234567890")
 #p.text("\n\nThe quick brown fox jumped over the lazy dog 0123456789\n\n")
 
-p.cut()
+#p.cut()
+
+print(p.is_online())
+print(p.paper_status())
 
 
 #im = EscposImage("/home/brentvasas/downloads/test_apple.png")
