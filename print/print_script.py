@@ -36,7 +36,13 @@ headers = {
 }
 
 
+def normalize_apostrophes(message: str) -> str:
+    # Replace iOS/smart quote apostrophes with standard ASCII apostrophe
+    return message.replace("\u2018", "'").replace("\u2019", "'")
+
+
 def format_message(message: str) -> str:
+    message = normalize_apostrophes(message)
     output_lines = []
     for line in message.split("\n"):
         if not line:
