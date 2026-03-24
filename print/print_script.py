@@ -48,10 +48,12 @@ def strip_unprintable(message: str) -> str:
     # default PC437 code page cannot represent.
     return "".join(c for c in message if 0x20 <= ord(c) <= 0x7E or c == "\n")
 
+def sanitize_string(in_string: str) -> str:
+    in_string = normalize_apostrophes(in_string)
+    in_string = strip_unprintable(in_string)
+    return in_string
 
 def format_message(message: str) -> str:
-    message = normalize_apostrophes(message)
-    message = strip_unprintable(message)
     output_lines = []
     for line in message.split("\n"):
         if not line:
@@ -77,6 +79,8 @@ sender_name = sys.argv[3].strip()
 ip = sys.argv[4]
 device_info = sys.argv[5]
 
+sender_name = sanitize_string(sender_name)
+message = sanitize_string(message)
 message = format_message(message)
 
 header = headers.get(theme)
