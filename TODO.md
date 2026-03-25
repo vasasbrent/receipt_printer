@@ -61,7 +61,7 @@ Feature:
 
 ## Migrate Theme Colors to CSS Variables
 
-**Status: Not Started**
+**Status: Ready for Implementation**
 
 * Currently theme background colors are set via `document.body.style.backgroundColor` in the JS switch statement in `script.js`
 * Move theme color definitions to CSS custom properties (e.g. `--theme-bg-note`, `--theme-bg-poem`, etc.) in `style.css`
@@ -70,7 +70,7 @@ Feature:
 
 ## Helper Dialog
 
-**Status: Specify**
+**Status: Ready for Implementation**
 
 **Note:** Depends on "Migrate Theme Colors to CSS Variables" — implement that first so the button and dialog can derive their colors from CSS theme variables.
 
