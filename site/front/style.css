@@ -1,7 +1,19 @@
+/* Theme background colors */
+:root {
+  --theme-bg-default: #f2f2f2;
+  --theme-bg-note: #645200;
+  --theme-bg-poem: #f3e5f5;
+  --theme-bg-memo: #e0e0e0;
+}
+
+body[data-theme="note"] { background-color: var(--theme-bg-note); }
+body[data-theme="poem"] { background-color: var(--theme-bg-poem); }
+body[data-theme="memo"] { background-color: var(--theme-bg-memo); }
+
 /* Global Layout */
 body {
   margin: 0;
-  background-color: #f2f2f2;
+  background-color: var(--theme-bg-default);
   font-family: sans-serif;
   display: flex;
   align-items: center;

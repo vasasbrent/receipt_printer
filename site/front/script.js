@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
   messageInput.style.display = 'none'; // Hide message box
   senderLine.style.display = 'none';
   senderInput.value = '';
-  document.body.style.backgroundColor = '#f2f2f2'; // Default background
+  document.body.removeAttribute('data-theme');
 });
 
 // Theme switching
@@ -87,19 +87,7 @@ themeSelect.addEventListener('change', () => {
     senderInput.placeholder = activePoet ?? (defaultSenders[theme] || 'Anonymous');
     receipt.classList.add(theme);
     headerEl.textContent = headers[theme] || '';
-
-    // Theme backgrounds
-    switch (theme) {
-      case 'note':
-        document.body.style.backgroundColor = '#645200';
-        break;
-      case 'poem':
-        document.body.style.backgroundColor = '#f3e5f5';
-        break;
-      case 'memo':
-        document.body.style.backgroundColor = '#e0e0e0';
-        break;
-    }
+    document.body.dataset.theme = theme;
   } else {
     // Hide message box, clear text, and reset visuals
     messageInput.style.display = 'none';
@@ -108,7 +96,7 @@ themeSelect.addEventListener('change', () => {
     senderInput.value = '';
     activePoet = null;
     headerEl.textContent = '';
-    document.body.style.backgroundColor = '#ffffff';
+    document.body.removeAttribute('data-theme');
   }
 });
 
