@@ -4,7 +4,9 @@ The list of things that must be done in order for the project to be finished.
 
 ## Create Deployment Script
 
-**Status: Not Started**
+**Status: Completed**
+
+**Note:** This is managed in a different, more secure, version control scheme.
 
 * Form
   * Bash script
@@ -93,13 +95,34 @@ Feature:
 
 ## Feedback on Printer Status
 
-**Status: Not Started**
+**Status: Specify**
 
 Online status and paper roll fullness (if available)
 They are available, this will be a fun one.
+
+* Red/Yellow/Green circular indicator in the top left corner of the viewport
+* Clicking on the indicator brings up a help dialog showing:
+  * Timestamp of status (YYYY-DD-MMTHH:MM:SS, adjusted to user TZ)
+  * Printer online status (online, offline)
+  * Paper roll status (full, low, out)
+* Clicking anywhere while help dialog is up removes dialog
+* Status indicator logic
+  * Red if any are true:
+    * Printer offline
+    * No Paper
+  * Yellow if any are true:
+    * Low Paper
+  * Green Otherwise
 
 ## Replace Dev Popup Messages
 
 **Status: Not Started**
 
 If something in the pipeline isn't working the user should just get a generic message.
+
+## Bug: No Leading Whitespace in Message
+
+**Status: Not Started**
+
+When the user puts leading whitespace in the first line of a message, that whitespace is removed.
+The user message should be printed as faithfully as possible to what they see (and create) in the front end.
