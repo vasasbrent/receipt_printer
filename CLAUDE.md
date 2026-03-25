@@ -39,6 +39,10 @@ uv run --with gunicorn gunicorn -w 4 -b 0.0.0.0:8000 'site.back.backend:receipt_
 uv run --with escpos print/printer_testing.py
 ```
 
+## Rules
+
+- Never change the `Status` field of any item in `TODO.md`. The user tests changes in dev before marking features complete.
+
 ## Key details
 
 - Rate limiting: 3 requests/minute per IP on `/print`, 10/min global fallback (via `flask-limiter`)
