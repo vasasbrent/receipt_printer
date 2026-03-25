@@ -63,7 +63,7 @@ Feature:
 
 ## Migrate Theme Colors to CSS Variables
 
-**Status: Ready for Implementation**
+**Status: Completed**
 
 * Currently theme background colors are set via `document.body.style.backgroundColor` in the JS switch statement in `script.js`
 * Move theme color definitions to CSS custom properties (e.g. `--theme-bg-note`, `--theme-bg-poem`, etc.) in `style.css`
