@@ -4,11 +4,26 @@
   --theme-bg-note: #645200;
   --theme-bg-poem: #f3e5f5;
   --theme-bg-memo: #e0e0e0;
+
+  /* Help button */
+  --help-btn-size: 2rem;
+  --help-btn-color: #cccccc;       /* no theme: light gray on white */
+  --help-icon-color: rgba(0, 0, 0, 0.5);
 }
 
-body[data-theme="note"] { background-color: var(--theme-bg-note); }
-body[data-theme="poem"] { background-color: var(--theme-bg-poem); }
-body[data-theme="memo"] { background-color: var(--theme-bg-memo); }
+body[data-theme="note"] {
+  background-color: var(--theme-bg-note);
+  --help-btn-color: #a08828;       /* lighter than #645200 */
+  --help-icon-color: rgba(255, 255, 255, 0.6);
+}
+body[data-theme="poem"] {
+  background-color: var(--theme-bg-poem);
+  --help-btn-color: #c8a8d0;       /* darker than #f3e5f5 */
+}
+body[data-theme="memo"] {
+  background-color: var(--theme-bg-memo);
+  --help-btn-color: #b8b8b8;       /* darker than #e0e0e0 */
+}
 
 /* Global Layout */
 body {
@@ -256,6 +271,72 @@ main {
 }
 .memo .receipt-header {
   color: #333;
+}
+
+/* Help Button */
+#help-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  width: var(--help-btn-size);
+  height: var(--help-btn-size);
+  background: var(--help-btn-color);
+  color: var(--help-icon-color);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease, opacity 0.2s ease;
+}
+
+#help-btn:hover {
+  opacity: 0.8;
+}
+
+#help-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Help Dialog */
+#help-dialog {
+  position: fixed;
+  top: calc(1rem + var(--help-btn-size) + 0.7rem);
+  right: calc(1rem + var(--help-btn-size) / 2 - 10px);
+  z-index: 100;
+  width: calc(100vw - 2 * (1rem + var(--help-btn-size) / 2 + 10px));
+  background: var(--help-btn-color);
+  color: rgba(0, 0, 0, 0.75);
+  padding: 1.25em 1.5em;
+  border-radius: 6px;
+  border-top-right-radius: 0;
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0.95;
+  transition: background-color 0.3s ease;
+}
+
+#help-dialog p {
+  margin: 0;
+}
+
+/* Wedge pointing up toward the help button (top-right corner) */
+#help-dialog::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--help-btn-color);
+  opacity: 0.95;
+  transition: border-bottom-color 0.3s ease;
 }
 
 /* Responsive adjustments */
