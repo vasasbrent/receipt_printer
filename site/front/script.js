@@ -1,4 +1,6 @@
 const themeSelect = document.getElementById('theme-select');
+const helpBtn = document.getElementById('help-btn');
+const helpDialog = document.getElementById('help-dialog');
 const receipt = document.getElementById('receipt');
 const headerEl = document.getElementById('receipt-header');
 const messageInput = document.getElementById('message-input');
@@ -105,6 +107,19 @@ function showSentPopup() {
   popup.classList.add('show');
   setTimeout(() => popup.classList.remove('show'), 1500); // disappear after 1.5s
 }
+
+// Help dialog
+helpBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  helpDialog.hidden = !helpDialog.hidden;
+});
+
+function dismissHelp() {
+  if (!helpDialog.hidden) helpDialog.hidden = true;
+}
+
+document.addEventListener('click', dismissHelp);
+document.addEventListener('keydown', dismissHelp);
 
 submitBtn.addEventListener('click', () => {
   const theme = themeSelect.value;
