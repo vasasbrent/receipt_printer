@@ -4,6 +4,7 @@
   --theme-bg-note: #645200;
   --theme-bg-poem: #f3e5f5;
   --theme-bg-memo: #e0e0e0;
+  --theme-bg-draw: #91b1e3;
 
   /* Help button */
   --help-btn-size: 2rem;
@@ -23,6 +24,10 @@ body[data-theme="poem"] {
 body[data-theme="memo"] {
   background-color: var(--theme-bg-memo);
   --help-btn-color: #b8b8b8;       /* darker than #e0e0e0 */
+}
+body[data-theme="draw"] {
+  background-color: var(--theme-bg-draw);
+  --help-btn-color: #6974BE;       /* darker than #91b1e3 */
 }
 
 /* Global Layout */
