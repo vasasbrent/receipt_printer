@@ -9,29 +9,37 @@ const senderInput = document.getElementById('sender-input');
 const submitBtn = document.getElementById('submit-btn');
 
 const defaultSenders = {
-  note: 'Psst, pass it on...',
-  memo: 'Corporate',
+  note: [
+    'Psst, pass it on...',
+    'Check Yes or No',
+    'Later Gator',
+    'Toodles',
+    'Live Long and Prosper',
+  ],
+  memo: [
+    'Corporate',
+  ],
+  poem: [
+    'William Shakespeare',
+    'Emily Dickinson',
+    'Robert Frost',
+    'Langston Hughes',
+    'Maya Angelou',
+    'Walt Whitman',
+    'Edgar Allan Poe',
+    'Pablo Neruda',
+    'Sylvia Plath',
+    'T.S. Eliot',
+    'Mary Oliver',
+    'Diane Seuss',
+  ],
 };
 
-const poets = [
-  'William Shakespeare',
-  'Emily Dickinson',
-  'Robert Frost',
-  'Langston Hughes',
-  'Maya Angelou',
-  'Walt Whitman',
-  'Edgar Allan Poe',
-  'Pablo Neruda',
-  'Sylvia Plath',
-  'T.S. Eliot',
-  'Mary Oliver',
-  'Diane Seuss',
-];
+let activeDefaultSender = null;
 
-let activePoet = null;
-
-function randomPoet() {
-  return poets[Math.floor(Math.random() * poets.length)];
+function randomEntry(theme) {
+  const entries = defaultSenders[theme];
+  return entries[Math.floor(Math.random() * entries.length)];
 }
 
 // ASCII headers for each theme
@@ -85,8 +93,8 @@ themeSelect.addEventListener('change', () => {
     messageInput.style.display = 'block';
     senderLine.style.display = 'flex';
     senderInput.value = '';
-    activePoet = theme === 'poem' ? randomPoet() : null;
-    senderInput.placeholder = activePoet ?? (defaultSenders[theme] || 'Anonymous');
+    activeDefaultSender = randomEntry(theme);
+    senderInput.placeholder = activeDefaultSender;
     receipt.classList.add(theme);
     headerEl.textContent = headers[theme] || '';
     document.body.dataset.theme = theme;
@@ -96,7 +104,7 @@ themeSelect.addEventListener('change', () => {
     messageInput.value = '';
     senderLine.style.display = 'none';
     senderInput.value = '';
-    activePoet = null;
+    activeDefaultSender = null;
     headerEl.textContent = '';
     document.body.removeAttribute('data-theme');
   }
@@ -142,8 +150,7 @@ submitBtn.addEventListener('click', () => {
   submitBtn.disabled = true;
 
   const sender_name = senderInput.value.trim()
-    || activePoet
-    || defaultSenders[theme]
+    || activeDefaultSender
     || 'Anonymous';
 
   fetch('/print', {
